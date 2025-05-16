@@ -1,0 +1,48 @@
+{
+  "name": "guia_virtual",
+  "version": "1.0.0",
+  "main": "src/server.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node .",
+    "create": "node build/database/create-database.js",
+    "drop": "node build/database/drop-database.js",
+    "watch": "tsx watch src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "md5": "^2.3.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.14.1",
+    "nodemailer": "^6.9.16",
+    "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/joi": "^17.2.3",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/md5": "^2.3.5",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.9.1",
+    "@types/nodemailer": "^6.4.16",
+    "@types/sequelize": "^4.28.20",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
