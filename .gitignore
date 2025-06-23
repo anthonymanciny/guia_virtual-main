@@ -3,8 +3,10 @@
 
 # Ignorar a pasta node_modules
 node_modules/
-src/uploads/audio/
-src/uploads/image/
+
+!uploads/image/
+!uploads/image/.gitkeep
+
 # Ignorar outras pastas e arquivos desnecessários que você não quer versionar
 .DS_Store
 dist/
