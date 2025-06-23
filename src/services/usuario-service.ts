@@ -1,3 +1,4 @@
+import { CreationAttributes } from "sequelize";
 import { IUsuario } from "../interface/usuario-interface";
 import { UsuarioModel} from "../models/usuario-model";
 
@@ -6,13 +7,9 @@ export class UsuarioService {
     constructor(){}
 
 
-    public async criar(novo_item: IUsuario) {
+    public async criar(novo_item: CreationAttributes<UsuarioModel>) {
         try {
-            await UsuarioModel.create({
-                nomeUsuario: novo_item.nomeUsuario,
-                emailUsuario: novo_item.emailUsuario,
-                senhaUsuario: novo_item.senhaUsuario
-            });
+            await UsuarioModel.create(novo_item);
         } catch (erro: any) {
             throw new Error("Erro ao tentar incluir um novo usuario [" + erro.message + "]")
         }
@@ -36,13 +33,11 @@ export class UsuarioService {
         }
     }
 
-    public async alterar(id: number, item: IUsuario ) {
+    public async alterar(id: number, item: Partial<CreationAttributes<UsuarioModel>>) {
         try {
-            const usuario : UsuarioModel = await this.buscar(id);
+            const usuario = await this.buscar(id);
             if (usuario) {
-                usuario.nomeUsuario = item.nomeUsuario;
-                usuario.emailUsuario = item.emailUsuario;
-                usuario.senhaUsuario = item.senhaUsuario;
+               
                 usuario.save();
             } else {
                 throw new Error('Usuário não encontrado');

@@ -19,9 +19,8 @@ export class PontoVisitacaoRouter {
             '/criar',
             authenticateJWT, // Middleware de autenticação JWT
             upload.fields(
-                [{ name: 'image', maxCount: 1 }, 
-                 { name: 'mapa', maxCount: 1 }, 
-                 { name: 'audio', maxCount: 1 }
+                [{ name: 'imagem', maxCount: 10 }, 
+                 { name: 'audio', maxCount: 10 }
                 ]), // Middleware de upload de arquivos
             (req, res) => {
                 this.pontovisitacaoController.criar(req, res); // Chama o método criar do controller
@@ -49,7 +48,7 @@ export class PontoVisitacaoRouter {
         });
 
         // Rota para excluir um ponto pelo ID
-        this.router.delete('/excluir/:id', authenticateJWT, (req, res) => {
+        this.router.delete('/excluir/:id',  (req, res) => {
             this.pontovisitacaoController.excluir(req, res);
         });
     }

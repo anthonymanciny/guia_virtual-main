@@ -28,7 +28,7 @@ export class LocalVisitacaoRouter {
             this.localvisitacaoController.alterar(req, res);
         });
 
-        this.router.delete('/excluir/:id',authenticateJWT, (req, res) => {
+        this.router.delete('/excluir/:id', (req, res) => {
             this.localvisitacaoController.excluir(req, res);
         });
     }

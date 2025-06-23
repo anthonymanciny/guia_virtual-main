@@ -1,5 +1,9 @@
 export interface ILocalVisitacao {
-    idlocal_visitacao: number;
-    nome: string;
-    descricao?: string; // Campo opcional
+  idlocal_visitacao: number;
+  titulo: string;
+  subtitulo?: string;
+  localizacao: string;
+  zona: string;
+  tipo_local: string;
+  descricao: string;
 }

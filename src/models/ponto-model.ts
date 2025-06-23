@@ -3,103 +3,88 @@ import sequelize from '../database/sequelize';
 import { LocalVisitacaoModel } from './localvisitacao-model';
 
 export class PontoVisitacaoModel extends Model {
-  private _idPontoVisitacao!: number;
-  private _idLocalVisitacao!: number;
+  private _idponto_visitacao!: number;
+  private _idlocal_visitacao!: number;
   private _nome!: string;
-  private _imagem?: string 
-  private _mapa?:string
-  private _audio?: string 
-  private _texto?: string 
+  private _imagem!: string[]; // agora é array
+  private _audio!: string[];  // agora é array
+  private _texto!: string;
 
-  get idPontoVisitacao(): number {
-    return this._idPontoVisitacao;
+  get idponto_visitacao(): number {
+    return this._idponto_visitacao;
+  }
+  set idponto_visitacao(value: number) {
+    this._idponto_visitacao = value;
   }
 
-  set idPontoVisitacao(value: number) {
-    this._idPontoVisitacao = value;
+  get idlocal_visitacao(): number {
+    return this._idlocal_visitacao;
   }
-
-  get idLocalVisitacao(): number {
-    return this._idLocalVisitacao;
-  }
-
-  set idLocalVisitacao(value: number) {
-    this._idLocalVisitacao = value;
+  set idlocal_visitacao(value: number) {
+    this._idlocal_visitacao = value;
   }
 
   get nome(): string {
     return this._nome;
   }
-
   set nome(value: string) {
     this._nome = value;
   }
 
-  get imagem(): string | undefined {
+  get imagem(): string[] {
     return this._imagem;
   }
-
-  set imagem(value: string | undefined) {
+  set imagem(value: string[]) {
     this._imagem = value;
   }
 
-  get mapa(): string | undefined {
-    return this._mapa;
-  }
-
-  set mapa(value: string | undefined) {
-    this._mapa = value;
-  }
-
-  get audio(): string | undefined {
+  get audio(): string[] {
     return this._audio;
   }
-
-  set audio(value: string | undefined) {
+  set audio(value: string[]) {
     this._audio = value;
   }
 
-  get texto(): string | undefined {
+  get texto(): string {
     return this._texto;
   }
-
-  set texto(value: string | undefined) {
+  set texto(value: string) {
     this._texto = value;
   }
 }
 
 PontoVisitacaoModel.init(
   {
-    idPontoVisitacao: {
+    idponto_visitacao: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
-      field: 'idponto_visitacao',
+      comment: 'Código do Ponto de Visitação',
     },
-    idLocalVisitacao: {
+    idlocal_visitacao: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      field: 'idlocal_visitacao',
+      comment: 'Código do Local de Visitação relacionado',
     },
     nome: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
+      comment: 'Nome do Ponto de Visitação',
     },
     imagem: {
-      type: DataTypes.STRING(255), // Para armazenar o caminho ou URL
+      type: DataTypes.JSON,
       allowNull: true,
-    },
-    mapa: {
-      type: DataTypes.STRING(255), // Para armazenar o caminho ou URL
-      allowNull: true,
+      comment: 'Lista de caminhos das imagens do ponto de visitação',
     },
     audio: {
-      type: DataTypes.STRING(255), // Para armazenar o caminho ou URL
+      type: DataTypes.JSON,
       allowNull: true,
+      comment: 'Lista de caminhos dos áudios do ponto de visitação',
     },
     texto: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
+      comment: 'Texto explicativo do Ponto de Visitação',
     },
   },
   {
@@ -110,10 +95,10 @@ PontoVisitacaoModel.init(
   }
 );
 
-// Definir a associação entre os modelos
+// Associações
 PontoVisitacaoModel.belongsTo(LocalVisitacaoModel, {
-  foreignKey: 'idLocalVisitacao',
+  foreignKey: 'idlocal_visitacao',
 });
 LocalVisitacaoModel.hasMany(PontoVisitacaoModel, {
-  foreignKey: 'idLocalVisitacao',
+  foreignKey: 'idlocal_visitacao',
 });

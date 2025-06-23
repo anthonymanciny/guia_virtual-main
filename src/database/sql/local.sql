@@ -1,6 +1,10 @@
 CREATE TABLE `tbl_local_visitacao` (
-  `idlocal_visitacao` int NOT NULL AUTO_INCREMENT COMMENT 'Código do Local de Visitação',
-  `Nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Nome do Local de Visitação (Ex: SENAC)',
-  `Descricao` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'Texto explicativo do Local de Visitação',
+  `idlocal_visitacao` INT NOT NULL AUTO_INCREMENT COMMENT 'Código do Local de Visitação',
+  `Titulo` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Título do Local de Visitação',
+  `Subtitulo` VARCHAR(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'Subtítulo do Local de Visitação',
+  `Localizacao` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Endereço ou referência do Local',
+  `Zona` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Zona geográfica do Local',
+  `Tipo_Local` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Tipo do Local de Visitação',
+  `Descricao` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Descrição detalhada do Local de Visitação',
   PRIMARY KEY (`idlocal_visitacao`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabela que armazena informações dos locais de visitação';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabela que armazena os locais de visitação';

@@ -1,9 +1,8 @@
 export interface IPontoVisitacao {
-    idPontoVisitacao: number;
-    idLocalVisitacao: number;
-    nome: string;
-    imagem?: string; 
-    mapa?:string;
-    audio?: string;  
-    texto?: string;  
+  idponto_visitacao: number;
+  idlocal_visitacao: number;
+  nome: string;
+  imagem?: string;
+  audio?: string;
+  texto: string;
 }

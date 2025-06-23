@@ -1,8 +1,7 @@
 CREATE TABLE `tbl_usuario` (
-  `idUsuario` int NOT NULL AUTO_INCREMENT COMMENT 'Identificador numério',
-  `nomeUsuario` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `emailUsuario` varchar(30) NOT NULL COMMENT 'nome do usuario para acessar o sistema',
-  `senhaUsuario` varchar(15) NOT NULL DEFAULT (_utf8mb4'banco1234') COMMENT 'senha do usuário para acessar o sistema',
-  PRIMARY KEY (`idUsuario`),
-  UNIQUE KEY `tbl_usuario_UN` (`emailUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Define as pessoas que poderão utilizar o sistema';
+  `idusuario` INT NOT NULL AUTO_INCREMENT COMMENT 'Código do Usuário',
+  `NomeUsuario` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Nome de exibição do usuário',
+  `EmailUsuario` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL UNIQUE COMMENT 'Endereço de e-mail do usuário',
+  `SenhaUsuario` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Senha criptografada do usuário',
+  PRIMARY KEY (`idusuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabela que armazena as credenciais dos usuários';

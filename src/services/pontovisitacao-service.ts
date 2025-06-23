@@ -1,3 +1,4 @@
+import { CreationAttributes } from "sequelize";
 import { IPontoVisitacao } from "../interface/pontovisitacao-interface";
 import { PontoVisitacaoModel } from "../models/ponto-model";
 import path from 'path';
@@ -5,44 +6,37 @@ import path from 'path';
 export class PontoVisitacaoService {
     constructor() {}
 
-    public async criar(novo_item: IPontoVisitacao, files: any) {
-        try {
-          // Verifique se os arquivos foram recebidos
-          let imagem = '';
-          let audio = '';
-          let mapa = '';
-      
-          const PORT = process.env.PORT;
-          const BASE_URL = `http://localhost:${PORT}`; // Substitua pelo domínio do seu backend em produção
+    public async criar(novo_item: CreationAttributes<PontoVisitacaoModel>, files: any) {
+  try {
+    const PORT = process.env.PORT || '3000';
+    const BASE_URL = `http://localhost:${PORT}`;
 
-          if (files && files.image && files.image[0]) {
-              imagem = `${BASE_URL}/uploads/image/${files.image[0].filename}`;
-          }
-          
-          if (files && files.audio && files.audio[0]) {
-              audio = `${BASE_URL}/uploads/audio/${files.audio[0].filename}`;
-          }
-          
-          if (files && files.mapa && files.mapa[0]) {
-              mapa = `${BASE_URL}/uploads/mapa/${files.mapa[0].filename}`;
-          }    
+    // Clonar o objeto para não alterar o original
+    const dadosParaCriar = { ...novo_item };
 
-        
-          // Criação do novo item no banco de dados
-          await PontoVisitacaoModel.create({
-            idLocalVisitacao: novo_item.idLocalVisitacao,
-            nome: novo_item.nome,
-            imagem: imagem, // Caminho da imagem no servidor
-            audio: audio,   // Caminho do áudio no servidor
-            mapa:mapa,
-            texto: novo_item.texto,
-          });
-      
-          return { message: 'Ponto de visitação criado com sucesso!' };
-        } catch (erro: any) {
-          throw new Error('Erro ao tentar incluir um novo ponto [' + erro.message + ']');
-        }
-      }
+    // Substituir os arquivos enviados (imagem e audio)
+ if (files) {
+  if (files.imagem && files.imagem.length > 0) {
+    dadosParaCriar.imagem = files.imagem.map(
+      (file: any) => `${BASE_URL}/uploads/image/${file.filename}`
+    );
+  }
+
+  if (files.audio && files.audio.length > 0) {
+    dadosParaCriar.audio = files.audio.map(
+      (file: any) => `${BASE_URL}/uploads/audio/${file.filename}`
+    );
+  }
+}
+
+    // Criar registro com os dados completos
+    await PontoVisitacaoModel.create(dadosParaCriar);
+
+    return { message: 'Ponto de visitação criado com sucesso!' };
+  } catch (erro: any) {
+    throw new Error('Erro ao tentar incluir um novo ponto [' + erro.message + ']');
+  }
+}
 
     public async listar() {
         try {
@@ -71,24 +65,21 @@ export class PontoVisitacaoService {
         }
       }
     
-    public async alterar(id: number, item: IPontoVisitacao) {
-        try {
-            const ponto: PontoVisitacaoModel = await this.buscar(id);
-            if (ponto) {
-                ponto.idLocalVisitacao = item.idLocalVisitacao;
-                ponto.nome = item.nome;
-                ponto.imagem = item.imagem;
-                ponto.mapa = item.mapa;
-                ponto.audio = item.audio;
-                ponto.texto = item.texto;
-                await ponto.save();
-            } else {
-                throw new Error('Ponto não encontrado');
-            }
-        } catch (erro: any) {
-            throw new Error(erro.message);
-        }
+   public async alterar(id: number, item: Partial<IPontoVisitacao>) {
+  try {
+    const ponto = await this.buscar(id);
+    if (!ponto) {
+      throw new Error('Ponto não encontrado');
     }
+
+    // Atualiza todos os campos presentes em item, independente do que for
+    ponto.set(item);
+
+    await ponto.save();
+  } catch (erro: any) {
+    throw new Error(erro.message);
+  }
+}
 
     public async delete(id: number) {
         try {

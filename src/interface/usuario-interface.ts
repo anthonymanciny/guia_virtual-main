@@ -1,6 +1,6 @@
 export interface IUsuario {
-    idUsuario: number;
-    nomeUsuario: string;
-    emailUsuario: string;
-    senhaUsuario: string;
+  idusuario: number;
+  nomeusuario: string;
+  emailusuario: string;
+  senhausuario: string;
 }

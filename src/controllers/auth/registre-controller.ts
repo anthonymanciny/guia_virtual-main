@@ -2,26 +2,30 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { UsuarioModel } from '../../models/usuario-model';
 
-// Função para registrar o usuário
 export const register = async (req: Request, res: Response) => {
   try {
-    const { nomeUsuario, emailUsuario, senhaUsuario } = req.body;
+    const data = { ...req.body }; // pega todos os campos enviados
 
-    // Verificar se o e-mail já está registrado
-    const userExists = await UsuarioModel.findOne({ where: { emailUsuario } });
+    // Verifica se tem senha para hash
+    if (!data.senhausuario) {
+      return res.status(400).json({ message: 'Senha é obrigatória.' });
+    }
+
+    // Verificar se o email já está registrado (considerando que o model tem emailusuario)
+    if (!data.emailusuario) {
+      return res.status(400).json({ message: 'Email é obrigatório.' });
+    }
+
+    const userExists = await UsuarioModel.findOne({ where: { emailusuario: data.emailusuario } });
     if (userExists) {
       return res.status(400).json({ message: 'Email já está em uso.' });
     }
 
-    // Criptografando a senha
-    const hashedPassword = await bcrypt.hash(senhaUsuario, 10);
+    // Criptografar a senha e substituir no objeto data
+    data.senhausuario = await bcrypt.hash(data.senhausuario, 10);
 
-    // Criando o usuário no banco de dados
-    await UsuarioModel.create({
-      nomeUsuario,
-      emailUsuario,
-      senhaUsuario: hashedPassword,
-    });
+    // Criar o usuário com todos os campos recebidos e modificados (senha hasheada)
+    await UsuarioModel.create(data);
 
     return res.status(201).json({ message: 'Usuário registrado com sucesso.' });
   } catch (err) {
