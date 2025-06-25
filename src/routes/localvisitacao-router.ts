@@ -17,8 +17,7 @@ export class LocalVisitacaoRouter {
             '/criar',
             authenticateJWT, // Middleware de autenticação JWT
             upload.fields(
-                [{ name: 'imagem', maxCount: 10 }, 
-                 { name: 'audio', maxCount: 10 }
+                [{ name: 'imagem', maxCount: 10 }
                 ]), // Middleware de upload de arquivos
             (req, res) => {this.localvisitacaoController.criar(req, res);
         });
