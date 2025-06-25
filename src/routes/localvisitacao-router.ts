@@ -1,6 +1,8 @@
 import express, { Router } from 'express';
 import { LocalVisitacaoController } from '../controllers/localvisitacao-controller';
 import { authenticateJWT } from '../middleware/auth';
+import upload from '../middleware/upload-mid';
+
 
 export class LocalVisitacaoRouter {
     public readonly router!: Router;
@@ -11,8 +13,14 @@ export class LocalVisitacaoRouter {
         this.router = express.Router();
         this.localvisitacaoController = new LocalVisitacaoController();
 
-        this.router.post('/criar', authenticateJWT, (req, res) => {
-            this.localvisitacaoController.criar(req, res);
+        this.router.post(
+            '/criar',
+            authenticateJWT, // Middleware de autenticação JWT
+            upload.fields(
+                [{ name: 'imagem', maxCount: 10 }, 
+                 { name: 'audio', maxCount: 10 }
+                ]), // Middleware de upload de arquivos
+            (req, res) => {this.localvisitacaoController.criar(req, res);
         });
 
         this.router.get('/buscar/:id', (req, res) => {
