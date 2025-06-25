@@ -4,8 +4,8 @@
 # Ignorar a pasta node_modules
 node_modules/
 
-!uploads/image/
-!uploads/image/.gitkeep
+uploads/image/
+uploads/image/.gitkeep
 
 # Ignorar outras pastas e arquivos desnecessários que você não quer versionar
 .DS_Store

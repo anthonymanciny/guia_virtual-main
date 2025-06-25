@@ -37,6 +37,8 @@ export class PontoVisitacaoRouter {
             this.pontovisitacaoController.buscarPorIdLocalVisitacao(req, res);
         });
 
+        
+
         // Rota para listar todos os pontos
         this.router.get('/listar', (req, res) => {
             this.pontovisitacaoController.listar(req, res);

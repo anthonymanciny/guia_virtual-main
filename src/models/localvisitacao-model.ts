@@ -4,10 +4,10 @@ import sequelize from '../database/sequelize';
 export class LocalVisitacaoModel extends Model {
   private _idlocal_visitacao!: number;
   private _titulo!: string;
-  private _subtitulo!: string;
   private _localizacao!: string;
   private _zona!: string;
   private _tipo_local!: string;
+  private _imagem!: string[]; // agora é array
   private _descricao!: string;
 
   get idlocal_visitacao(): number {
@@ -22,13 +22,6 @@ export class LocalVisitacaoModel extends Model {
   }
   set titulo(value: string) {
     this._titulo = value;
-  }
-
-  get subtitulo(): string {
-    return this._subtitulo;
-  }
-  set subtitulo(value: string) {
-    this._subtitulo = value;
   }
 
   get localizacao(): string {
@@ -52,6 +45,13 @@ export class LocalVisitacaoModel extends Model {
     this._tipo_local = value;
   }
 
+    get imagem(): string[] {
+    return this._imagem;
+  }
+  set imagem(value: string[]) {
+    this._imagem = value;
+  }
+
   get descricao(): string {
     return this._descricao;
   }
@@ -73,11 +73,8 @@ LocalVisitacaoModel.init(
       allowNull: false,
       comment: 'Título do Local de Visitação',
     },
-    subtitulo: {
-      type: DataTypes.STRING(150),
-      allowNull: true,
-      comment: 'Subtítulo do Local de Visitação',
-    },
+    
+
     localizacao: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -92,6 +89,11 @@ LocalVisitacaoModel.init(
       type: DataTypes.STRING(50),
       allowNull: false,
       comment: 'Tipo do Local de Visitação',
+    },
+    imagem: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      comment: 'Lista de caminhos das imagens do ponto de visitação',
     },
     descricao: {
       type: DataTypes.TEXT,

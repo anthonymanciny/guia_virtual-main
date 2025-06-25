@@ -46,6 +46,7 @@ export class PontoVisitacaoService {
             throw new Error("Erro ao tentar listar pontos [" + erro.message + "]");
         }
     }
+    
 
     public async buscar(id: number): Promise<PontoVisitacaoModel> {
         try {
