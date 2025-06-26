@@ -20,7 +20,8 @@ export class PontoVisitacaoRouter {
             authenticateJWT, // Middleware de autenticação JWT
             upload.fields(
                 [{ name: 'imagem', maxCount: 10 }, 
-                 { name: 'audio', maxCount: 10 }
+                 { name: 'audio', maxCount: 10 },
+                 { name: 'mapa', maxCount: 1 }
                 ]), // Middleware de upload de arquivos
             (req, res) => {
                 this.pontovisitacaoController.criar(req, res); // Chama o método criar do controller
@@ -35,6 +36,10 @@ export class PontoVisitacaoRouter {
         // Rota para buscar pontos por ID do local de visitação
         this.router.get('/buscarlocal/:idLocalVisitacao', (req, res) => {
             this.pontovisitacaoController.buscarPorIdLocalVisitacao(req, res);
+        });
+
+        this.router.get('/buscarmapa/:idponto_visitacao', (req, res) => {
+            this.pontovisitacaoController.listarMapas(req, res);
         });
 
         

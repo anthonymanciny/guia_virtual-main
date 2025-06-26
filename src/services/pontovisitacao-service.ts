@@ -27,6 +27,11 @@ export class PontoVisitacaoService {
       (file: any) => `${BASE_URL}/uploads/audio/${file.filename}`
     );
   }
+  if (files.mapa && files.mapa.length > 0) {
+    dadosParaCriar.mapa = files.mapa.map(
+      (file: any) => `${BASE_URL}/uploads/mapa/${file.filename}`
+    );
+  }
 }
 
     // Criar registro com os dados completos
@@ -65,6 +70,22 @@ export class PontoVisitacaoService {
           throw new Error(erro.message);
         }
       }
+    
+    public async listarMapasPorId(idponto_visitacao: number): Promise<string[]> {
+  try {
+    const ponto = await PontoVisitacaoModel.findByPk(idponto_visitacao, {
+      attributes: ['mapa'],
+    });
+
+    if (!ponto) {
+      throw new Error('Ponto de visitação não encontrado');
+    }
+
+    return ponto.mapa;
+  } catch (erro: any) {
+    throw new Error("Erro ao buscar mapa por ID [" + erro.message + "]");
+  }
+}
     
    public async alterar(id: number, item: Partial<IPontoVisitacao>) {
   try {

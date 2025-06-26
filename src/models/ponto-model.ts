@@ -8,6 +8,7 @@ export class PontoVisitacaoModel extends Model {
   private _nome!: string;
   private _imagem!: string[]; // agora é array
   private _audio!: string[];  // agora é array
+  private _mapa!: string[];
   private _descricao!: string;
 
   get idponto_visitacao(): number {
@@ -45,6 +46,13 @@ export class PontoVisitacaoModel extends Model {
     this._audio = value;
   }
 
+  get mapa(): string[] {
+    return this._mapa;
+  }
+  set mapa(value: string[]) {
+    this._mapa = value;
+  }
+
   get descricao(): string {
     return this._descricao;
   }
@@ -77,6 +85,11 @@ PontoVisitacaoModel.init(
       comment: 'Lista de caminhos das imagens do ponto de visitação',
     },
     audio: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      comment: 'Lista de caminhos dos áudios do ponto de visitação',
+    },
+    mapa: {
       type: DataTypes.JSON,
       allowNull: true,
       comment: 'Lista de caminhos dos áudios do ponto de visitação',

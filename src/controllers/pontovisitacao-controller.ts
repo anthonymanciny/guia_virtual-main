@@ -64,6 +64,27 @@ export class PontoVisitacaoController {
         }
     }
 
+
+    public async listarMapas(req: Request, res: Response) {
+    const idponto_visitacao = parseInt(req.params.idponto_visitacao);
+
+    if (isNaN(idponto_visitacao)) {
+        return res.status(400).json({ message: 'ID inválido' });
+    }
+
+    try {
+        const mapas = await this.pontovisitacaoService.listarMapasPorId(idponto_visitacao);
+
+        if (!mapas || mapas.length === 0) {
+            return res.status(404).json({ message: 'Nenhum mapa encontrado para este ponto' });
+        }
+
+        res.status(200).json({ mapas });
+    } catch (erro: any) {
+        res.status(500).json({ message: erro.message });
+    }
+}
+
     public async listar(req: Request, res: Response) {
         try {
             const pontos = await this.pontovisitacaoService.listar();
