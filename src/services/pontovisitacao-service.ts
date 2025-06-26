@@ -57,9 +57,9 @@ export class PontoVisitacaoService {
         }
     }
 
-    public async buscarPorIdLocalVisitacao(idLocalVisitacao: number): Promise<PontoVisitacaoModel[]> {
+    public async buscarPorIdLocalVisitacao(idlocal_visitacao: number): Promise<PontoVisitacaoModel[]> {
         try {
-          const pontos = await PontoVisitacaoModel.findAll({ where: { idLocalVisitacao } });
+          const pontos = await PontoVisitacaoModel.findAll({ where: { idlocal_visitacao } });
           return pontos as PontoVisitacaoModel[];
         } catch (erro: any) {
           throw new Error(erro.message);

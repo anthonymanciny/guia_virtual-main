@@ -1,13 +1,37 @@
 import { CreationAttributes } from "sequelize";
 import { ILocalVisitacao } from "../interface/localvisitacao-interface";
 import { LocalVisitacaoModel } from "../models/localvisitacao-model";
+import path from 'path';
+
 export class LocalVisitacaoService{
     constructor(){}
 
+    public async criar(novo_item: CreationAttributes<LocalVisitacaoModel>, files: any) {
+  try {
+    const PORT = process.env.PORT || '3000';
+    const BASE_URL = `http://localhost:${PORT}`;
 
-      public async criar(novo_item: CreationAttributes<LocalVisitacaoModel>) {
-    try {
-      await LocalVisitacaoModel.create(novo_item);
+    // Clonar o objeto para não alterar o original
+    const dadosParaCriar = { ...novo_item };
+
+    // Substituir os arquivos enviados (imagem e audio)
+ if (files) {
+  if (files.imagem && files.imagem.length > 0) {
+    dadosParaCriar.imagem = files.imagem.map(
+      (file: any) => `${BASE_URL}/uploads/image/${file.filename}`
+    );
+  }
+
+  if (files.audio && files.audio.length > 0) {
+    dadosParaCriar.audio = files.audio.map(
+      (file: any) => `${BASE_URL}/uploads/audio/${file.filename}`
+    );
+  }
+}
+
+
+
+      await LocalVisitacaoModel.create(dadosParaCriar);
     } catch (erro: any) {
       throw new Error("Erro ao tentar incluir um novo local [" + erro.message + "]");
     }

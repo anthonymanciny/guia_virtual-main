@@ -16,7 +16,7 @@ export class LocalVisitacaoController {
         }
     
         try {
-            await this.localvisitacaoService.criar(req.body);
+            await this.localvisitacaoService.criar(req.body, req.files);
             res.status(201).json( { message: 'Local criado com sucesso'});
         } catch (erro: any) {
             res.status(500).json(erro.message);
